@@ -39,17 +39,18 @@ Users usually don’t get actionable insight into _which_ appliance is likely ca
     - other weather factors (demo dataset)
 - **Energy saving tips**
   - Randomized energy-saving tips to guide users toward lower usage
+- **ML model (implemented, not fully integrated)**
+  - Supervised learning model using **Random Forest** is implemented
+  - Currently not used to drive in-app analytics/maintenance insights due to lack of real sensor-based appliance consumption data
 
 ### Planned features (not implemented yet)
 
 - **Sensor-backed appliance input/output metering**
   - Ingest real readings per appliance via IoT sensors
-- **External ML model integration (separate server)**
-  - Send equipment electricity/time-series data to an ML service via API
-  - Receive insights like:
-    - which equipment is likely under-maintained / inefficient
-    - predicted impact on bill / kWh
-  - Display these insights in the UI (maintenance alerts and recommendations)
+- **End-to-end ML-powered appliance analytics (blocked by sensors/data)**
+  - Send appliance electricity/time-series data (from sensors) to the ML service
+  - Use ML output in the app to identify inefficient / under-maintained appliances
+  - Show maintenance alerts + likely bill impact in the dashboard/analytics UI
 - **Subscription/recharge-based electricity guidance**
   - Predict remaining “balance”/expected bill and warn early (before the billing cycle ends)
 
@@ -61,7 +62,7 @@ Users usually don’t get actionable insight into _which_ appliance is likely ca
   - Weather forecast: WeatherAPI
   - Email OTP: Gmail SMTP (via Nodemailer)
   - Media: Cloudinary
-  - (Planned) ML service: separate model server accessed via HTTP API
+  - ML service: Random Forest (supervised) model (implemented; app integration depends on sensor data availability)
 
 ## Project structure
 
@@ -163,8 +164,8 @@ npm run dev
 ## Roadmap (suggested next steps)
 
 - Add real appliance data ingestion (IoT sensor payloads + storage)
-- Add ML service endpoint configuration (e.g., `VITE_ML_API_URL`) and a backend proxy route
-- Add equipment “health score” + maintenance recommendation panel in dashboard
+- Wire sensor data into an ML inference API (define request/response schema)
+- Add equipment “health score” + maintenance recommendation panel in dashboard (powered by ML output)
 - Expand prediction horizons (7 days / 1 month / 3 months) from real usage + weather
 - Link prediction to estimated billing and show “recharge/subscription” style budget warnings
 
